@@ -4,6 +4,10 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float swipeThreshold = 50f;
+    public GameObject bulletPrefab; // prefab của đạn
+    public Transform bulletSpawnPoint; // vị trí xuất hiện của đạn
+    private float lastShotTime; // thời điểm bắn viên đạn cuối cùng
+
 
     private Vector3 startPosition;
     private Vector3 endPosition;
@@ -11,9 +15,11 @@ public class PlayerController : MonoBehaviour
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
 
+
     private void Update()
     {
         Move();
+        ShootBullet();
     }
 
     private void Move()
@@ -67,5 +73,19 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
         }
-    }    
+    }
+    void ShootBullet()
+    {
+        // Nếu chưa đủ thời gian giữa các lần bắn, thoát khỏi hàm
+        if (Time.time - lastShotTime < 0.5f) return;
+
+        //lay dan tu pool ra
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
+
+        // Bắn đạn với vận tốc của player + 2f
+        bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speed + 2f);
+
+        // Lưu lại thời điểm bắn viên đạn cuối cùng
+        lastShotTime = Time.time;
+    }   
 }

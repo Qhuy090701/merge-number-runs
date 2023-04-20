@@ -378,7 +378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790044104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.52, y: 3.29, z: -30.31}
+  m_LocalPosition: {x: 0, y: 5.71, z: -0.956}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -415,11 +415,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bac0cc6043d2e247adc9c35d13f7955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 1186004873}
-  txt: {fileID: 0}
-  x1: 0
-  x2: 0
-  move: 0
+  speed: 0
+  swipeThreshold: 50
+  bulletPrefab: {fileID: 6728460637839213938, guid: d4743dd51ff2f5246a873c8bf782037e, type: 3}
+  bulletSpawnPoint: {fileID: 2116353967}
 --- !u!136 &1790044109
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -656,7 +655,7 @@ GameObject:
   m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -668,7 +667,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116353966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
