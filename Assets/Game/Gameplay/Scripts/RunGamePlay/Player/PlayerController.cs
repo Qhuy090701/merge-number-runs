@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speedPlayer = 5f;
+    [SerializeField] private float speedBullet = 100f;
     [SerializeField] private float swipeThreshold = 50f;
     [SerializeField] private float jumpForce;
     [SerializeField] private Transform startGamePoint;
@@ -35,12 +36,12 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-       // Jump();
+        // Jump();
     }
 
     private void Move()
     {
-        transform.position += Vector3.forward * speed * Time.deltaTime;
+        transform.position += Vector3.forward * speedPlayer * Time.deltaTime;
 
         // Khi nhấn chuột trái, lưu lại vị trí chuột hiện tại
         if (Input.GetMouseButtonDown(0))
@@ -81,37 +82,38 @@ public class PlayerController : MonoBehaviour
         // Nếu đang di chuyển sang trái, di chuyển sang trái với tốc độ speed
         if (isMovingLeft)
         {
-            transform.position += Vector3.left * speed * Time.deltaTime;
+            transform.position += Vector3.left * speedPlayer * Time.deltaTime;
         }
         // Nếu đang di chuyển sang phải, di chuyển sang phải với tốc độ speed
         else if (isMovingRight)
         {
-            transform.position += Vector3.right * speed * Time.deltaTime;
+            transform.position += Vector3.right * speedPlayer * Time.deltaTime;
         }
     }
     void ShootBullet()
     {
-        if (isShooting = true)
-        {
-            // Nếu chưa đủ thời gian giữa các lần bắn, thoát khỏi hàm
-            if (Time.time - lastShotTime < 0.5f) return;
-            GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
-            // Bắn đạn với vận tốc của player + 2f
-            bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speed + 2f);
-            // Lưu lại thời điểm bắn viên đạn cuối cùng
-            lastShotTime = Time.time;
-            
-            Debug.Log("Shoot");
-        }
+        // Kiểm tra xem player đã chạm vào tag "Finish" chưa, nếu có thì dừng bắn đạn
+        if (gameObject.CompareTag(Constants.TAG_FINISH)) return;
+
+        // Kiểm tra xem player đang bị thương hay chết chưa, nếu có thì dừng bắn đạn
+        if (!gameObject.activeSelf) return;
+
+        // Nếu chưa đủ thời gian giữa các lần bắn, thoát khỏi hàm
+        if (Time.time - lastShotTime < 0.5f) return;
+
+        // Tiếp tục bắn đạn
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
+        // Bắn đạn với vận tốc của player + 2f
+        bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * speedBullet;
+        // Lưu lại thời điểm bắn viên đạn cuối cùng
+        lastShotTime = Time.time;
+
+        Debug.Log("Shoot");
     }
+
 
     public void Jump()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //}
-
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         Debug.Log("Jump thành công");
     }
@@ -131,34 +133,35 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(startPos, rayDirection, out hit, rayLength))
         {
             // Kiểm tra xem raycast đã va chạm với mặt đất hay không
-            if (hit.collider.CompareTag("Ground"))
+            if (hit.collider.CompareTag(Constants.TAG_GROUND))
             {
                 // Xử lý khi va chạm với mặt đất
                 Debug.Log("Hit the ground!");
-                ShootBullet();
+                    ShootBullet();
             }
         }
     }
+
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Constants.TAG_FINISH))
         {
-            speed = 0;
+            speedPlayer = 0;
         }
 
-        if(other.CompareTag(Constants.TAG_PLAYER_ADD))
+        if (other.CompareTag(Constants.TAG_PLAYER_ADD))
         {
             Debug.Log("Va Cham");
-        }    
+        }
 
-        if(other.CompareTag(Constants.TAG_JUMPPOINT))
+        if (other.CompareTag(Constants.TAG_JUMPPOINT))
         {
             Jump();
             Debug.Log("jump ");
-        }    
+        }
 
-        if(other.CompareTag(Constants.TAG_TRAP))
+        if (other.CompareTag(Constants.TAG_TRAP))
         {
             Destroy(gameObject);
         }
