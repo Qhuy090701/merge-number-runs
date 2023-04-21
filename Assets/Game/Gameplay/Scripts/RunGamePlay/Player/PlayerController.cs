@@ -135,10 +135,12 @@ public class PlayerController : MonoBehaviour
             // Kiểm tra xem raycast đã va chạm với mặt đất hay không
             if (hit.collider.CompareTag(Constants.TAG_GROUND))
             {
-                // Xử lý khi va chạm với mặt đất
-                Debug.Log("Hit the ground!");
                     ShootBullet();
             }
+            if(hit.collider.CompareTag(Constants.TAG_FINISH))
+            {
+                Debug.Log("Stop Shoot");
+            }    
         }
     }
 
