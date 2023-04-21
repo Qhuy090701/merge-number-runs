@@ -14,7 +14,7 @@ public class ObjectPool : Singleton<ObjectPool>
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
-    void Start()
+    private void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -25,10 +25,6 @@ public class ObjectPool : Singleton<ObjectPool>
             for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);
-                if (obj == null)
-                {
-                    Debug.LogError("sasas");
-                }
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -74,5 +70,4 @@ public class ObjectPool : Singleton<ObjectPool>
 
         poolDictionary[tag].Enqueue(objectToReturn);
     }
-
 }
