@@ -8,6 +8,8 @@ public class TrapHealth : MonoBehaviour
 
     [SerializeField] private float maxhealth;
     [SerializeField] private float currentHealth;
+    //text
+    [SerializeField] private Text healthText;
 
     void Start()
     {

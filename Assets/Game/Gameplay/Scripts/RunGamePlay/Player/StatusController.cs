@@ -20,9 +20,9 @@ public class StatusController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(Constants.TAG_PLAYER))
+        if (other.CompareTag(Constants.TAG_PLAYER))
         {
-            other.transform.localPosition  = new Vector3(transform.localPosition.x + 2f , transform.localPosition.y , transform.localPosition.z);
+            
             Debug.Log("Change status = true ");
             status = true;
             scripts.enabled = status;

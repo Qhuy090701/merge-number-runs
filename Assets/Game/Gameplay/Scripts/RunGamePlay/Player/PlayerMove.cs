@@ -222,12 +222,5 @@ public class PlayerMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        if(collision.CompareTag(Constants.TAG_PLAYER_ADD))
-        {
-            //set parent
-            Debug.Log("Co va cham");
-            collision.transform.localPosition = new Vector3(transform.localPosition.x + 1.5f, transform.localPosition.y, transform.localPosition.z);
-        }
     }
 }
