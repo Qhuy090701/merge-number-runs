@@ -22,16 +22,10 @@ public class StatusController : MonoBehaviour
     {
         if(other.CompareTag(Constants.TAG_PLAYER))
         {
-            other.transform.localPosition  = new Vector3(transform.localPosition.x + 1.5f , transform.localPosition.y , transform.localPosition.z);
+            other.transform.localPosition  = new Vector3(transform.localPosition.x + 2f , transform.localPosition.y , transform.localPosition.z);
             Debug.Log("Change status = true ");
             status = true;
             scripts.enabled = status;
         }
-
-        //if(other.CompareTag(Constants.TAG_PLAYER_ADD))
-        //{
-        //       Debug.Log("");
-
-        //}
     }
 }

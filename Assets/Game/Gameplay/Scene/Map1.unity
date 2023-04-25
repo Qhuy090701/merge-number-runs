@@ -447,6 +447,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263568637}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &376993905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6066905802736858297, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+  m_PrefabInstance: {fileID: 1694801483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &376993910
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376993905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.005364308, y: 0.0067455834, z: 0.0019495795}
+  m_Center: {x: -0.00007561303, y: 0.0033030137, z: 0.00037478984}
 --- !u!1 &928764640
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +648,7 @@ MonoBehaviour:
   jumpForce: 5
   shottime: 0.1
   currentState: 0
+  capsuleCollider: {fileID: 0}
   bulletSpawnPoint: {fileID: 147632736}
 --- !u!114 &1243191811
 MonoBehaviour:
@@ -745,6 +764,7 @@ MonoBehaviour:
   jumpForce: 5
   shottime: 0.1
   currentState: 0
+  capsuleCollider: {fileID: 0}
   bulletSpawnPoint: {fileID: 1550403977}
 --- !u!114 &1381999104
 MonoBehaviour:
@@ -1133,6 +1153,10 @@ PrefabInstance:
       value: 0.54670334
       objectReference: {fileID: 0}
     - target: {fileID: 2086343890279387468, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086343890279387468, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
       propertyPath: m_Center.x
       value: 0.01556778
       objectReference: {fileID: 0}
@@ -1141,13 +1165,37 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 228.08519
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 263.37006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.1163
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.8561
       objectReference: {fileID: 0}
     - target: {fileID: 6066905802736858298, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6066905802736858300, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1840584071081533219, guid: e90bab6368917c345baf4c9cf409c736, type: 3}
+    - target: {fileID: 6066905802736858301, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 862338155711011292, guid: e90bab6368917c345baf4c9cf409c736, type: 3}
     - target: {fileID: 6066905803206683896, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
       propertyPath: m_Name
       value: Player_number_0
@@ -1246,6 +1294,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6066905803206683900, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+    - {fileID: 6066905803206683901, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
+    - {fileID: 2086343890279387468, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c3f1ecbe4b81f7c409c5b71ccabb11a8, type: 3}
 --- !u!1 &1694801484 stripped
 GameObject:
@@ -1269,7 +1319,21 @@ MonoBehaviour:
   jumpForce: 5
   shottime: 0.1
   currentState: 0
+  capsuleCollider: {fileID: 0}
   bulletSpawnPoint: {fileID: 1608073738}
+--- !u!65 &1694801499
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694801484}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2171173, y: 1.8054292, z: 1}
+  m_Center: {x: 0.108558655, y: 0.010505587, z: 0}
 --- !u!1 &1774009164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,7 +1820,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000606030}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &2000606035
 MonoBehaviour:
   m_ObjectHideFlags: 0
