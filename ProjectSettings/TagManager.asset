@@ -12,6 +12,7 @@ TagManager:
   - JumpPoint
   - Trap
   - Column
+  - DeadZone
   layers:
   - Default
   - TransparentFX

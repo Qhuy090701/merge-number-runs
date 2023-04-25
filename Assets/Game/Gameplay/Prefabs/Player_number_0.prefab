@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6066905802736858298}
   - component: {fileID: 6066905802736858301}
   - component: {fileID: 6066905802736858300}
+  - component: {fileID: 2086343890279387468}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &2086343890279387468
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6066905802736858297}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6066905803206683896
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,10 +162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bac0cc6043d2e247adc9c35d13f7955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speedPlayer: 0
+  speedBullet: 100
   swipeThreshold: 20
   jumpForce: 5
-  bulletPrefab: {fileID: 6728460637839213938, guid: d4743dd51ff2f5246a873c8bf782037e, type: 3}
   bulletSpawnPoint: {fileID: 6066905803400869023}
 --- !u!136 &6066905803206683901
 CapsuleCollider:
@@ -160,7 +175,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6066905803206683896}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2.0184374

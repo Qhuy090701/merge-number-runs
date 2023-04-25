@@ -13,4 +13,5 @@ public class Constants : MonoBehaviour
     public const string TAG_JUMPPOINT = "JumpPoint";
     public const string TAG_TRAP = "Trap";
     public const string TAG_COLUMN = "Column";
+    public const string TAG_DEADZONE = "DeadZone";
 }
