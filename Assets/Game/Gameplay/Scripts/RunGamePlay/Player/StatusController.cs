@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
-public class StatusController : MonoBehaviour
+public class StatusController : PlayerMove
 {
     [SerializeField] private bool status;
     [SerializeField] private Behaviour scripts;
+    private PlayerMove playerMove;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +20,11 @@ public class StatusController : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) 
     {
         if (other.CompareTag(Constants.TAG_PLAYER))
         {
-            
-            Debug.Log("Change status = true ");
+            currentState = PlayerMove.PlayerState.Moving;
             status = true;
             scripts.enabled = status;
         }

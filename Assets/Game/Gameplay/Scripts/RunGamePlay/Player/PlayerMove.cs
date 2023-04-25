@@ -1,45 +1,32 @@
-﻿using System.Collections;
+﻿using Funzilla;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ToonyColorsPro.ShaderGenerator.Enums;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float swipeThreshold = 20f;
+    [SerializeField] private float speedMove = 5f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float shottime = 0.1f;
-    [SerializeField] private PlayerState currentState;
-    [SerializeField] private CapsuleCollider capsuleCollider;
-    //[SerializeField] private Behaviour scripts;
-    //[SerializeField] private bool status;
+    protected PlayerState currentState;
+    public   GameObject player;
 
     public Transform bulletSpawnPoint;
     private float lastShotTime;
 
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-
     private bool hasJumped = false;
     private bool isShooting = false;
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
 
-    private void Awake()
-    {
-        //create capsule collider
-        capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
-    }
     private void Start()
     {
-        //scripts.enabled = status;
         currentState = PlayerState.Idle;
-        Debug.Log("idle");
-        isShooting = false; // set isShooting là false để không bắn đạn khi chạy game
+        isShooting = false;
     }
 
 
-    private enum PlayerState
+    protected enum PlayerState
     {
         Idle,
         Moving,
@@ -73,10 +60,10 @@ public class PlayerMove : MonoBehaviour
 
     private void IdleState()
     {
-        if (Input.GetMouseButton(0))
-        {
+        //if (Input.GetMouseButton(0))
+        //{
             currentState = PlayerState.Moving;
-        }
+        //}
     }
 
     private void MoveState()
@@ -118,48 +105,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        transform.position += Vector3.forward * speed * Time.deltaTime;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            startPosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            endPosition = Input.mousePosition;
-            float distance = Vector3.Distance(startPosition, endPosition);
-
-            if (distance > swipeThreshold)
-            {
-                Vector3 direction = endPosition - startPosition;
-
-                if (direction.x > 0)
-                {
-                    isMovingRight = true;
-                    isMovingLeft = false;
-                }
-                else
-                {
-                    isMovingLeft = true;
-                    isMovingRight = false;
-                }
-            }
-            else
-            {
-                isMovingLeft = false;
-                isMovingRight = false;
-            }
-        }
-
-        if (isMovingLeft)
-        {
-            transform.position += Vector3.left * speed * Time.deltaTime;
-        }
-        else if (isMovingRight)
-        {
-            transform.position += Vector3.right * speed * Time.deltaTime;
-        }
+        transform.position += Vector3.forward * speedMove * Time.deltaTime;
     }
 
     private void ShootBullet()
@@ -168,7 +114,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (Time.time - lastShotTime < shottime) return;
             GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speed * 5);
+            bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speedMove * 5);
             lastShotTime = Time.time;
             Debug.Log("Shoot");
         }    
@@ -221,6 +167,19 @@ public class PlayerMove : MonoBehaviour
         if(collision.CompareTag(Constants.TAG_COLUMN))
         {
             Destroy(gameObject);
+        }
+
+        if(collision.CompareTag(Constants.TAG_PLAYER_ADD))
+        {
+            collision.transform.SetParent(player.transform);
+            int childCount = player.transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform child = player.transform.GetChild(i);
+                Vector3 childPos = child.position;
+                collision.transform.position = new Vector3(transform.position.x + (1.55f*i), transform.position.y, transform.position.z);
+                collision.gameObject.tag = Constants.TAG_PLAYER;
+            }
         }
     }
 }
