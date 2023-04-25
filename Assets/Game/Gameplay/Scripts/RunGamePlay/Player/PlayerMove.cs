@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float shottime = 0.1f;
     [SerializeField] private PlayerState currentState;
+    [SerializeField] private CapsuleCollider capsuleCollider;
     //[SerializeField] private Behaviour scripts;
     //[SerializeField] private bool status;
 
@@ -26,6 +27,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
+        //create capsule collider
+        capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
     }
     private void Start()
     {
@@ -161,14 +164,14 @@ public class PlayerMove : MonoBehaviour
 
     private void ShootBullet()
     {
-        if (isShooting = true)
+        if(isShooting = true)
         {
             if (Time.time - lastShotTime < shottime) return;
             GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speed * 5);
             lastShotTime = Time.time;
             Debug.Log("Shoot");
-        }
+        }    
 
     }
 
@@ -220,13 +223,11 @@ public class PlayerMove : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(collision.CompareTag(Constants.TAG_PLAYER))
+        if(collision.CompareTag(Constants.TAG_PLAYER_ADD))
         {
-            Debug.Log("?va cahm");
-            foreach (Transform child in transform)
-            {
-                child.position = new Vector3(child.position.x + 1F, child.position.y, child.position.z);
-            }
-        }    
+            //set parent
+            Debug.Log("Co va cham");
+            collision.transform.localPosition = new Vector3(transform.localPosition.x + 1.5f, transform.localPosition.y, transform.localPosition.z);
+        }
     }
 }

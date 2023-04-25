@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                child.position = new Vector3(child.position.x, child.position.y, child.position.z);
+                child.position = new Vector3(child.position.x+1.5f, child.position.y, child.position.z);
                 //debug position 
                 Debug.Log("child position = " + child.position);
             }
