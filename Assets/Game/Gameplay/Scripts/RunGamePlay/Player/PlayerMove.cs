@@ -175,7 +175,9 @@ public class PlayerMove : MonoBehaviour
             int childCount = player.transform.childCount;
             for (int i = 0; i < childCount; i++)
             {
-                Transform child = player.transform.GetChild(i);
+                Transform child = player.transform.GetChild(i); 
+                //debug ra số i khi va chạm
+                Debug.Log(i);
                 Vector3 childPos = child.position;
                 collision.transform.position = new Vector3(transform.position.x + (1.55f*i), transform.position.y, transform.position.z);
                 collision.gameObject.tag = Constants.TAG_PLAYER;
