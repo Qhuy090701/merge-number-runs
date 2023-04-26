@@ -27,6 +27,7 @@ public class Bullet : MonoBehaviour
 
         if(other.CompareTag(Constants.TAG_COLUMN))
         {
+            Debug.Log("Va cham");
             ObjectPool.Instance.ReturnToPool(Constants.TAG_BULLET, gameObject);
             TrapHealth hurtTrap = other.gameObject.GetComponent<TrapHealth>();
             hurtTrap.TakeDamage(dame);

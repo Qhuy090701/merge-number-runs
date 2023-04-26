@@ -10,15 +10,23 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float speedMove = 5f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float shottime = 0.1f;
+
+    public List<GameObject> character = new List<GameObject>();
+
     protected PlayerState currentState;
     public   GameObject player;
-
     public Transform bulletSpawnPoint;
     private float lastShotTime;
 
     private bool hasJumped = false;
     private bool isShooting = false;
 
+
+    private void Awake()
+    {
+        //get component game manager
+       // gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
     private void Start()
     {
         currentState = PlayerState.Idle;
@@ -110,7 +118,7 @@ public class PlayerMove : MonoBehaviour
 
     private void ShootBullet()
     {
-        if(isShooting = true)
+        if(isShooting == true)
         {
             if (Time.time - lastShotTime < shottime) return;
             GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
@@ -171,6 +179,8 @@ public class PlayerMove : MonoBehaviour
 
         if(collision.CompareTag(Constants.TAG_PLAYER_ADD))
         {
+            collision.gameObject.tag = Constants.TAG_PLAYER;
+            character.Add(collision.gameObject);
             collision.transform.SetParent(player.transform);
             int childCount = player.transform.childCount;
             for (int i = 0; i < childCount; i++)

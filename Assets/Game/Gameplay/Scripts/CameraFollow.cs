@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : Singleton<CameraFollow>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   //camera follow player
+    public Transform player;
+    public Vector3 offset;
+    public float smoothSpeed = 0.125f;
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
-        
+        //CHECK NULL
+        if (player == null)
+        {
+            //find constant tag_player
+            player = GameObject.FindGameObjectWithTag(Constants.TAG_PLAYER).transform;
+        }
+        Vector3 desiredPosition = player.position + offset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
     }
 }
