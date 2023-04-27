@@ -5,25 +5,22 @@ using UnityEngine.UI;
 
 public class TrapHealth : MonoBehaviour
 {
-
-    [SerializeField] private float maxhealth;
+    [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
-    //text
-    [SerializeField] private Text healthText;
+    public Text healthText;
 
     void Start()
     {
-        currentHealth = maxhealth;
+        currentHealth = maxHealth;
+        healthText = Instantiate(healthText, transform.position, Quaternion.identity);
+        healthText.transform.SetParent(transform);
+        healthText.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
     }
 
-    void Update()
+    public void TakeDamage(float damage)
     {
-
-    }
-
-    public void TakeDamage(float dame)
-    {
-        currentHealth -= dame;
+        currentHealth -= damage;
+        healthText.text = "Health: " + currentHealth.ToString();
         if (currentHealth <= 0)
         {
             Destroy(gameObject);

@@ -14,7 +14,6 @@ public class CameraFollow : Singleton<CameraFollow>
         //CHECK NULL
         if (player == null)
         {
-            //find constant tag_player
             player = GameObject.FindGameObjectWithTag(Constants.TAG_PLAYER).transform;
         }
         Vector3 desiredPosition = player.position + offset;

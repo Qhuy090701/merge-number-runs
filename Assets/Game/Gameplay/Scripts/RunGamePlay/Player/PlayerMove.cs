@@ -9,12 +9,10 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speedMove = 5f;
     [SerializeField] private float jumpForce;
-    [SerializeField] private float shottime = 0.1f;
-
-    public List<GameObject> character = new List<GameObject>();
+    [SerializeField] private float shottime = 0.1f;   
 
     protected PlayerState currentState;
-    public   GameObject player;
+    public GameObject player;
     public Transform bulletSpawnPoint;
     private float lastShotTime;
 
@@ -22,14 +20,11 @@ public class PlayerMove : MonoBehaviour
     private bool isShooting = false;
 
 
+
     private void Awake()
     {
-        //get component game manager
-       // gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-    private void Start()
-    {
         currentState = PlayerState.Idle;
+        Debug.Log("IDLE");
         isShooting = false;
     }
 
@@ -68,10 +63,10 @@ public class PlayerMove : MonoBehaviour
 
     private void IdleState()
     {
-        //if (Input.GetMouseButton(0))
-        //{
+        if (Input.GetMouseButton(0))
+        {
             currentState = PlayerState.Moving;
-        //}
+        }
     }
 
     private void MoveState()
@@ -118,18 +113,15 @@ public class PlayerMove : MonoBehaviour
 
     private void ShootBullet()
     {
-        if(isShooting == true)
+        if (isShooting == true)
         {
             if (Time.time - lastShotTime < shottime) return;
             GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, bulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody>().velocity = (transform.forward + Vector3.up * 0.5f) * (speedMove * 5);
             lastShotTime = Time.time;
             Debug.Log("Shoot");
-        }    
-
+        }
     }
-
-
 
     private void Jump()
     {
@@ -143,7 +135,7 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("Stop Shoot");
         }
 
-        if(collision.CompareTag(Constants.TAG_DEADZONE))
+        if (collision.CompareTag(Constants.TAG_DEADZONE))
         {
             Destroy(gameObject);
         }
@@ -162,34 +154,69 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("Jump");
         }
 
-        if(collision.CompareTag(Constants.TAG_TRAP))
+        if (collision.CompareTag(Constants.TAG_TRAP))
         {
             Destroy(gameObject);
-        }    
+        }
 
-        if(collision.CompareTag(Constants.TAG_FINISH))
+        if (collision.CompareTag(Constants.TAG_FINISH))
         {
             currentState = PlayerState.Win;
         }
 
-        if(collision.CompareTag(Constants.TAG_COLUMN))
+        if (collision.CompareTag(Constants.TAG_COLUMN))
         {
             Destroy(gameObject);
         }
 
-        if(collision.CompareTag(Constants.TAG_PLAYER_ADD))
+        //if (collision.CompareTag(Constants.TAG_PLAYER_ADD))
+        //{
+        //    collision.gameObject.tag = Constants.TAG_PLAYER;
+        //    collision.transform.SetParent(player.transform);
+        //    int childCount = player.transform.childCount;
+        //    for (int i = 0; i < childCount; i++)
+        //    {
+        //        Transform child = player.transform.GetChild(i);
+        //        Vector3 childPos = child.position;
+        //        if (collision.gameObject.transform.position.x < gameObject.transform.position.x)
+        //        {
+                    
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("Cham Phai");
+        //            collision.transform.position = new Vector3(transform.position.x - (1.55f * i), transform.position.y, transform.position.z);
+        //        }
+                 
+        //        collision.gameObject.tag = Constants.TAG_PLAYER;
+        //    }
+        //}
+
+
+        if (collision.CompareTag(Constants.TAG_PLAYER_ADD))
         {
             collision.gameObject.tag = Constants.TAG_PLAYER;
-            character.Add(collision.gameObject);
             collision.transform.SetParent(player.transform);
             int childCount = player.transform.childCount;
             for (int i = 0; i < childCount; i++)
             {
-                Transform child = player.transform.GetChild(i); 
-                //debug ra số i khi va chạm
-                Debug.Log(i);
+                Transform child = player.transform.GetChild(i);
                 Vector3 childPos = child.position;
-                collision.transform.position = new Vector3(transform.position.x + (1.55f*i), transform.position.y, transform.position.z);
+                if (collision.gameObject.transform.position.x < gameObject.transform.position.x)
+                {
+                    collision.transform.position = new Vector3(transform.position.x + (1.55f * i), transform.position.y, transform.position.z);
+                    // Move child object to the left by 1.5 units
+                    if (childPos.x < gameObject.transform.position.x)
+                    {
+                        childPos.x -= 1.5f;
+                        child.position = childPos;
+                    }
+                }
+                else
+                {
+                    collision.transform.position = new Vector3(transform.position.x + (1.55f * i), transform.position.y, transform.position.z);
+                }
+
                 collision.gameObject.tag = Constants.TAG_PLAYER;
             }
         }
